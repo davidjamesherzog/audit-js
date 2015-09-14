@@ -13,4 +13,16 @@ var auditModel = new Schema({
     message: {type: String}
 });
 
-module.exports = mongoose.model('Audit', auditModel);
+var auditDetailModel = new Schema({
+    request: {type: String},
+    response: {type: String},
+    exception: {type: String},
+    createdDate: { type: Date, default: Date.now }
+});
+
+var models = {
+    Audit : mongoose.model('Audit', auditModel),
+    AuditDetail : mongoose.model('AuditDetail', auditDetailModel)
+};
+
+module.exports = models;

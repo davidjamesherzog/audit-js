@@ -1,4 +1,4 @@
-var auditController = function(Audit) {
+var auditController = function(Audit, AuditDetail) {
 
   var api = {
     getList: getList,
@@ -22,8 +22,19 @@ var auditController = function(Audit) {
     });
   }
 
-  function get(req, res) {
-
+  function get(req, res, next) {
+    Audit.findById(req.params.auditId, function(err, audit) {
+      if (err) {
+        res.status(500).send(err);
+      } else if (audit) {
+        res.status(200);
+        res.send(audit);
+        //req.audit = audit;
+        //next();
+      } else {
+        res.status(404).send('no audit found');
+      }
+    });
   }
 
   function post(req, res) {
